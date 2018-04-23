@@ -1,6 +1,6 @@
 <div align='center'>
 
-## Dinner Plan
+# Dinner Plan
 
 ### Temat: Zarządzanie stołówką szkolną.
 
