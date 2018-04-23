@@ -17,4 +17,10 @@ Osoby zapisane będą miały wpływ na organizację własnej karty. Najpóźniej
 
 ![uml](https://raw.githubusercontent.com/Morfeu5z/Dinner-plan/master/uml.PNG)
 
+### Technologia:
+* HTML
+* CSS
+* JavaScript
+* Python & Flask
+
 </div>
