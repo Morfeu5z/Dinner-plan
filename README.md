@@ -2,8 +2,7 @@
 
 ## Dinner Plan
 
-### Temat:
-Zarządzanie stołówką szkolną.
+### Temat: Zarządzanie stołówką szkolną.
 
 Aleksander Sinkowski i Serhii Riznychuk
 </div>
@@ -15,6 +14,6 @@ Osoby zapisane będą miały wpływ na organizację własnej karty. Najpóźniej
 
 ### UML
 
-![uml]()
+![uml](https://raw.githubusercontent.com/Morfeu5z/Dinner-plan/master/uml.PNG)
 
 </div>
