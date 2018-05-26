@@ -58,49 +58,6 @@ function progress(input) {
 }
 
 /**
- * Animacja przejścia między rejestracją, a logowaniem
- * @param where
- */
-function log_reg(where) {
-    if (where == 'toReg') {
-        console.log('Go to reg');
-        $("#log").animate({
-                opacity: 0,
-            }, {
-                duration: 1000,
-                complete: function () {
-                    console.log('Animate half');
-                    $("#log").css('display', 'none');
-                    $("#reg").css('display', 'block');
-                    $("#reg").animate({
-                        opacity: '1'
-                    }, 1000);
-                    console.log('Animate end');
-                }
-            }
-        );
-
-    } else if (where == 'toLog') {
-        console.log('Go to log');
-        $("#reg").animate({
-                opacity: 0,
-            }, {
-                duration: 1000,
-                complete: function () {
-                    console.log('Animate half');
-                    $("#reg").css('display', 'none');
-                    $("#log").css('display', 'block');
-                    $("#log").animate({
-                        opacity: '1'
-                    }, 1000);
-                    console.log('Animate end');
-                }
-            }
-        );
-    }
-}
-
-/**
  * Aktywuje przycisk gdy w inputach jest jakaś wartość
  */
 function login() {

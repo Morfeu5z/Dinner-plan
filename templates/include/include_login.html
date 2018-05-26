@@ -1,0 +1,47 @@
+<!-- Logowanie -->
+<div class="col-8 mx-auto p-5 card shadow-lg">
+    <form>
+        <div class="input-grup">
+            <div class="row">
+                <div class="col display-4">
+                    Zaloguj się!
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-10 m-auto">
+                    Witaj w Dinner Plan. Dzięki tej karcie możesz zalogować się na swoje konto.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m-1 text-monospace">
+                    <input class="form-control text-center" type="email" placeholder="E-mail" id="inLog" oninput="login()">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m-1 text-monospace">
+                    <input class="form-control text-center" type="password" placeholder="Hasło"
+                           pattern="[A-Za-z0-9 ]{8,100}" id="inPass" oninput="login()"
+                           title="Hasło musi posiadać co najmniej 8 znaków, alfabet i cyfry.">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mt-2">
+                    Więcej informacji znajdziesz <a href="#">tutaj</a>.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mt-3 text-monospace">
+                    <input class="btn btn-outline-info" id="subLogin" type="submit" value="Zaloguj" disabled>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mt-2 text-monospace">
+                    <input class="btn btn-outline-secondary" id="goToReg" type="button" value="Zarejestruj się!"
+                           onclick="log_reg('registry')">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
