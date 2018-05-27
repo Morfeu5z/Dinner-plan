@@ -41,7 +41,7 @@ function progress(input) {
     var len = $('#in3').val();
     if ($('#in3').val() != $('#in4').val()) {
         $('#in4').css("background-color", "#FFA58F");
-    }else if(len.length >= 8){
+    } else if (len.length >= 8) {
         $('#in4').css("background-color", "#BBFFB5");
     }
 
@@ -51,6 +51,7 @@ function progress(input) {
             $("#progressbar").text("OK");
         } else {
             $("#sub").attr('disabled', 'disabled');
+            $("#progressbar").text("Hasła nie są identyczne");
         }
     } else {
         $("#sub").attr('disabled', 'disabled');

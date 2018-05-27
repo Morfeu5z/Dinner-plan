@@ -16,21 +16,21 @@
             <div class="row">
                 <div class="col m-1 mt-3 text-monospace">
                     <input class="form-control text-center bg-" type="text" placeholder="Imię i nazwisko" id="in1"
-                           onchange="progress(1)" maxlength="100" pattern="[A-Za-z ]{6,100}"
+                           oninput="progress(1)" maxlength="100" pattern="[A-Za-z ]{6,100}"
                            title="Powinny się tu znaleźć znaki z alfabetu i nie powinno być ich mniej niż 6."
                            name="name">
                 </div>
             </div>
             <div class="row">
                 <div class="col m-1 text-monospace">
-                    <input class="form-control text-center" type="email" placeholder="Login" id="in2"
-                           onchange="progress(2)" name="email">
+                    <input class="form-control text-center" type="email" placeholder="e-mail" id="in2"
+                           oninput="progress(2)" name="email">
                 </div>
             </div>
             <div class="row">
                 <div class="col m-1 text-monospace">
                     <input class="form-control text-center" type="password" placeholder="Hasło" id="in3"
-                           onchange="progress(3)" pattern="[A-Za-z0-9 ]{8,100}"
+                           oninput="progress(3)" pattern="[A-Za-z0-9 ]{8,100}"
                            title="Hasło musi posiadać co najmniej 8 znaków, alfabet i cyfry."
                             name="pass1">
                 </div>

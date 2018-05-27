@@ -10,7 +10,7 @@ function showPanel(where) {
             duration: 500,
             complete: function () {
                 console.log('Animate half');
-                $("#include").load("include/include_"+where+".html", function () {
+                $("#include").load("/include_"+where, function () {
                     $("#include").animate({
                         opacity: '1'
                     }, 500);
