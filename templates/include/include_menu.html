@@ -1,6 +1,12 @@
-<script>console.log('Pobranie panelu menu.')</script>
+<link rel=stylesheet type=text/css href="../static/style/menu.css">
+<script>log('menu.css', 'l');</script>
 <div class="row">
-    <div class="col-4 ml-auto mr-2 my-2 p-4 card shadow menu_option">
+    <div class="col-6 mx-auto my-2 p-4 card shadow user_info">
+        {{init.status}}: {{init.user}}
+    </div>
+</div>
+<div class="row">
+    <div class="col-4 ml-auto mr-2 my-2 p-4 card shadow menu_option" id="zapisani">
         Zapisani
     </div>
     <div class="col-4 mr-auto ml-2 my-2 p-4 card shadow menu_option">
@@ -11,7 +17,15 @@
     <div class="col-4 ml-auto mr-2 my-2 p-4 card shadow menu_option">
         Ustawienia
     </div>
-    <div class="col-4 mr-auto ml-2 my-2 p-4 card shadow menu_option">
+    <div class="col-4 mr-auto ml-2 my-2 p-4 card shadow menu_option" id="wyloguj">
         Wyloguj
     </div>
 </div>
+<script>
+    $('#wyloguj').bind('click', function () {
+        showPanel('login');
+    })
+    $('#zapisani').bind('click', function () {
+        showPanel('zapisani');
+    })
+</script>

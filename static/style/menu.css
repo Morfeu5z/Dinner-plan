@@ -1,12 +1,22 @@
 @import "base.css";
 
+.user_info {
+    border: none;
+    font-family: 'Raleway', sans-serif;;
+    font-size: 1.2rem;
+    transition: all 200ms !important;
+}
+
 .menu_option {
     border: none;
     font-family: 'Raleway', sans-serif;;
     font-size: 1.2rem;
+    transition: all 200ms !important;
 }
 
 .menu_option:hover {
+    color: white;
+    font-weight: bold;
     cursor: pointer;
     background: linear-gradient(210deg, #a5e0ff, #65468c);
 }

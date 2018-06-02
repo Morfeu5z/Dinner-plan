@@ -4,10 +4,10 @@
     {% include 'extend/header.html' %}
     <title>{{ init.title }}</title>
     <link rel=stylesheet type=text/css href="../static/style/{{ init.css }}.css">
-    <script>console.log('Pobrano sytl.')</script>
+    <script>log('Default css', 'l')</script>
 </head>
 <body onload="showPanel('{{ init.onStart }}')">
-<script>console.log('Uruchomienie aplikacji.')</script>
+<script>log('Aplication', 'r')</script>
 <div class="container">
 
     <!--Body, do którego AJAX'em ładowane są fragmenty html'a-->
@@ -18,11 +18,15 @@
 
 <script src="../static/scripts/{{ init.js }}.js"></script>
 
-<script async defer>
+<script>
     particlesJS.load('particles-js', '../static/particles.json', function () {
-        console.log('callback - particles.js config loaded');
+        log('Particles config', 'l');
+        log('Particles', 'r')
     });
-    console.log('Uruchomienie cząsteczek.');
+    document.write('<button style="position: fixed; top: 0; right: 0;" onclick="refresh()">Refresh</button>\n');
+    function refresh() {
+        showPanel(localStorage.getItem('where'));
+    }
 </script>
 
 </body>
