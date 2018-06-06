@@ -1,5 +1,5 @@
 /**
- * Animacja przejścia między rejestracją, a logowaniem
+ * Animacja przejścia między html'ami
  * @param where
  */
 function showPanel(where) {

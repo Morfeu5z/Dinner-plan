@@ -1,15 +1,157 @@
-<script>console.log('Pobranie panelu menu.')</script>
-<div class="row">
-    <div class="col-4 mx-auto my-2 p-4 card shadow user_info">
-        Lista osób zapisanych
-    </div>
-</div>
-<div class="row">
-    <div class="col-10 mx-auto p-2 card menu_option">
-        Zapisani
-    </div>
+<script>log('Lista zapisanych', 'l')</script>
+<link rel=stylesheet type=text/css href="../static/style/zapisani.css">
+<link rel="stylesheet" href="/static/style/fontello/css/fontello.css" type="text/css"/>
 
-    <div class="col-10 mx-auto p-2 card menu_option">
-        Zapisani
+<!--Tytuł-->
+<div class="row">
+    <div class="col-12 mx-auto p-2">
+        <div class="row">
+            <div class="col-* m-auto">
+                <h1>Lista osób zapisanych</h1>
+            </div>
+        </div>
     </div>
 </div>
+<!--Nawigacja i wyszukiwarka-->
+<div class="row mb-2">
+    <div class="col-12 mx-auto">
+        <div class="row">
+            <div class="col-* m-auto">
+                <button class="alx-btn-nav" onclick="showPanel('menu')"><i class="icon-angle-double-left"></i>Menu
+                </button>
+                <!--<input class="alx-input-search" type="text" placeholder="Szukaj...">-->
+                <!--<button class="alx-btn-search"><i class="icon-search-6"></i></button>-->
+                <button class="alx-btn-nav" onclick="showPanel('menu')">Dodaj <i class="icon-edit"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Lista osób zapisanych-->
+<div class="row alx-overflowX alx-bg-fff">
+    <div class="col-12 mx-auto p-2">
+        <!--Nagłówki-->
+        <div class="row mb-1 mt-2 font-weight-bold alx-list">
+            <div class="col-3 m-auto">
+                Imię i nazwisko
+                <button class="alx-btn-nav x-auto" onclick="sortName()"><i class="icon-angle-down"></i></button>
+            </div>
+            <div class="col-4 m-auto">
+                <button class="alx-btn-nav x-auto" onclick="prevM()"><i class="icon-angle-left"></i></button>
+                <span id="miesiac"></span>
+                <button class="alx-btn-nav x-auto" onclick="nextM()"><i class="icon-angle-right"></i></button>
+            </div>
+            <div class="col-2 m-auto">
+                Status
+                <button class="alx-btn-nav x-auto" onclick="sortPaid()"><i class="icon-angle-down"></i></button>
+            </div>
+            <div class="col-2 m-auto">Wyświetl</div>
+        </div>
+        <!--Lista-->
+        <div id="listOFsaved"></div>
+    </div>
+</div>
+<script>
+    // nr of month
+    nm = parseInt('{{ init.nm }}');
+    //year
+    year = parseInt('{{init.year}}');
+    //list of month 0 - styczen, 11 - grudzien
+    miesiace = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień']
+    //Wpisanie odpowiedniego miesiąca
+    $('#miesiac').text(miesiace[nm]);
+    //a-z or z-a
+    az = 'az';
+    //status of pay, yup or nope
+    stat = 'yup';
+
+
+    //On next month
+    function nextM() {
+        nm++;
+        if (nm > 11) {
+            nm = 0;
+            year++;
+        }
+        $('#miesiac').text(miesiace[nm]);
+        changeList(nm, year, az, stat);
+    }
+
+    //On prev month
+    function prevM() {
+        nm--;
+        if (nm < 0) {
+            nm = 11;
+            year--;
+        }
+        $('#miesiac').text(miesiace[nm]);
+        changeList(nm, year, az, stat);
+    }
+
+    //Change sort of paid/not paid
+    function sortPaid() {
+        if (stat == 'yup') {
+            stat = 'nope';
+        } else {
+            stat = 'yup';
+        }
+        changeList(nm, year, az, stat);
+    }
+
+    //Change sort of name
+    function sortName() {
+        if (az == 'az') {
+            az = 'za';
+        } else {
+            az = 'az';
+        }
+        changeList(nm, year, az, stat);
+    }
+
+    /**
+     * Przeładowuje panel na dane użytkownika
+     * w danym miesiącu i roku
+     * @param id - identyfikator huncwota
+     * */
+    function showUser(id) {
+        showPanelID('userData', id, nm, year);
+    }
+
+    //start function on load
+    changeList('{{ init.nm }}', '2018', 'az', 'yup');
+
+    /**
+     * Przeładowanie listy na podstawie odpowiednich parametrów
+     * @param mm - nr of month (0 - 11)
+     * @param year - year (2018)
+     * @param az - a-z or z-a (az or za)
+     * @param stat - first no paid or first paid (yup or nope)
+     */
+    function changeList(mm, year, az, stat) {
+        $("#listOFsaved").load("/include_listOFsaved", {'nm': mm, 'year': year, 'az': az, 'stat': stat});
+    }
+
+
+/**
+ * Animacja przejścia między html'ami + parametr
+ * @param where
+ */
+function showPanelID(where, id, nm, year) {
+    log(where, 'gt');
+    log(id + ' - ' + nm + ' - ' + year, 'i');
+    $("#include").animate({
+            opacity: 0,
+        }, {
+            duration: 500,
+            complete: function () {
+                $("#include").load("/include_" + where, {'id':id, 'nm':nm, 'year':year}, function () {
+                    $("#include").animate({
+                        opacity: '1'
+                    }, 500);
+                });
+                log(where, 'l');
+                localStorage.setItem('where', where);
+            }
+        }
+    );
+}
+</script>

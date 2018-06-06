@@ -1,0 +1,83 @@
+@import "base.css";
+
+h1 {
+    border: none;
+    font-family: 'Raleway', sans-serif;
+    color: #fff;
+    text-shadow: 0px 0px 10px #000;
+}
+
+.alx-overflowX {
+    max-height: 75vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.alx-bg-fff {
+    background: #fff;
+}
+
+.alx-btn-search, .alx-input-search, .alx-btn-nav {
+    padding: 0.3rem;
+    width: 50px;
+    border: none;
+}
+
+.alx-btn-search {
+    color: #000;
+    font-weight: bold;
+    transition: all 200ms !important;
+}
+
+.alx-btn-search:hover {
+    cursor: pointer;
+    background: #fff;
+}
+
+.alx-input-search {
+    width: 300px;
+    padding-left: 1rem;
+}
+
+.alx-btn-nav {
+    border-radius: 5px;
+    width: auto;
+    background: #fff;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    transition: all 200ms !important;
+}
+
+.alx-btn-nav:hover {
+    cursor: pointer;
+    color: #4286f4;
+}
+
+.alx-btn-nav:first-child {
+    border-radius: 5px 0 0 5px;
+}
+
+.alx-btn-nav:last-child {
+    border-radius: 0 5px 5px 0;
+}
+
+.x-auto {
+    width: auto;
+    padding: 0;
+    margin: 0;
+    border: solid 1px #fff;
+    border-radius: 5px!important;
+}
+
+.x-auto:hover {
+    border: solid 1px #4286f4;
+}
+.alx-list{
+    transition: all 200ms !important;
+}
+.alx-list:hover{
+    background: linear-gradient(#fff, #ddeaff, #fff);
+}
+.alx-list:first-child:hover{
+    background: #fff;
+}
