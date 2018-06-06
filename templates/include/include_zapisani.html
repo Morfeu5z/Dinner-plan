@@ -2,6 +2,8 @@
 <link rel=stylesheet type=text/css href="../static/style/zapisani.css">
 <link rel="stylesheet" href="/static/style/fontello/css/fontello.css" type="text/css"/>
 
+<!---------------------------HTML--------------------------->
+
 <!--Tytuł-->
 <div class="row">
     <div class="col-12 mx-auto p-2">
@@ -19,6 +21,7 @@
             <div class="col-* m-auto">
                 <button class="alx-btn-nav" onclick="showPanel('menu')"><i class="icon-angle-double-left"></i>Menu
                 </button>
+                <!--Wyszukiwarka tymczasowo odłączona-->
                 <!--<input class="alx-input-search" type="text" placeholder="Szukaj...">-->
                 <!--<button class="alx-btn-search"><i class="icon-search-6"></i></button>-->
                 <button class="alx-btn-nav" onclick="showPanel('menu')">Dodaj <i class="icon-edit"></i></button>
@@ -50,6 +53,9 @@
         <div id="listOFsaved"></div>
     </div>
 </div>
+
+<!---------------------------JS--------------------------->
+
 <script>
     // nr of month
     nm = parseInt('{{ init.nm }}');
