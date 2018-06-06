@@ -93,7 +93,9 @@ def listOfsaved():
     az = request.form.get('az')
     # status of pay, yup or nope
     stat = request.form.get('stat')
-    print("Odebrano: {} - {} - {} - {}".format(nm, year, az, stat))
+    # for search
+    search = request.form.get('user')
+    print("Odebrano: {} - {} - {} - {} - {}".format(nm, year, az, stat, search))
     # Tworzenie testowej listy
     # Tu musi sie znaleźć funkcja przyjmująca parametry wypisywane powyżej
     list = testData(nm)

@@ -1,6 +1,5 @@
 <script>log('Lista zapisanych', 'l')</script>
 <link rel=stylesheet type=text/css href="../static/style/zapisani.css">
-<link rel="stylesheet" href="/static/style/fontello/css/fontello.css" type="text/css"/>
 
 <!---------------------------HTML--------------------------->
 
@@ -21,9 +20,8 @@
             <div class="col-* m-auto">
                 <button class="alx-btn-nav" onclick="showPanel('menu')"><i class="icon-angle-double-left"></i>Menu
                 </button>
-                <!--Wyszukiwarka tymczasowo odłączona-->
-                <!--<input class="alx-input-search" type="text" placeholder="Szukaj...">-->
-                <!--<button class="alx-btn-search"><i class="icon-search-6"></i></button>-->
+                <input id="search" class="alx-input-search" type="text" placeholder="Szukaj...">
+                <button id="searchbtn" class="alx-btn-search" onclick="searchUser()"><i class="icon-search-6"></i></button>
                 <button class="alx-btn-nav" onclick="showPanel('menu')">Dodaj <i class="icon-edit"></i></button>
             </div>
         </div>
@@ -122,6 +120,21 @@
         showPanelID('userData', id, nm, year);
     }
 
+    //Listener ustawiony na enter
+    var input = document.getElementById("search");
+    input.addEventListener("keyup", function (event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            document.getElementById("searchbtn").click();
+        }
+    });
+
+    //Wyszukiwarka
+    function searchUser() {
+        var sear = $('#search').val();
+        changeList(nm, year, az, stat, sear);
+    }
+
     //start function on load
     changeList('{{ init.nm }}', '2018', 'az', 'yup');
 
@@ -132,8 +145,14 @@
      * @param az - a-z or z-a (az or za)
      * @param stat - first no paid or first paid (yup or nope)
      */
-    function changeList(mm, year, az, stat) {
-        $("#listOFsaved").load("/include_listOFsaved", {'nm': mm, 'year': year, 'az': az, 'stat': stat});
+    function changeList(mm, year, az, stat, search) {
+        var user = 'none';
+        if (search) {
+            if (search.length > 2) {
+                user = search;
+            }
+        }
+        $("#listOFsaved").load("/include_listOFsaved", {'nm': mm, 'year': year, 'az': az, 'stat': stat, 'user': user});
     }
 
 
