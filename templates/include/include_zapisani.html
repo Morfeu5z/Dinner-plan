@@ -131,27 +131,28 @@
     }
 
 
-/**
- * Animacja przejścia między html'ami + parametr
- * @param where
- */
-function showPanelID(where, id, nm, year) {
-    log(where, 'gt');
-    log(id + ' - ' + nm + ' - ' + year, 'i');
-    $("#include").animate({
-            opacity: 0,
-        }, {
-            duration: 500,
-            complete: function () {
-                $("#include").load("/include_" + where, {'id':id, 'nm':nm, 'year':year}, function () {
-                    $("#include").animate({
-                        opacity: '1'
-                    }, 500);
-                });
-                log(where, 'l');
-                localStorage.setItem('where', where);
+    /**
+     * Przejście do danych użytkownika odnośnie rozliczenia
+     * wraz z podaniem parametrów
+     * @param where
+     */
+    function showPanelID(where, id, nm, year) {
+        log(where, 'gt');
+        log(id + ' - ' + nm + ' - ' + year, 'i');
+        $("#include").animate({
+                opacity: 0,
+            }, {
+                duration: 500,
+                complete: function () {
+                    $("#include").load("/include_" + where, {'id': id, 'nm': nm, 'year': year}, function () {
+                        $("#include").animate({
+                            opacity: '1'
+                        }, 500);
+                    });
+                    log(where, 'l');
+                    localStorage.setItem('where', where);
+                }
             }
-        }
-    );
-}
+        );
+    }
 </script>
