@@ -47,7 +47,7 @@
             </div>
             <div class="col-2 m-auto">Wyświetl</div>
         </div>
-        <!--Lista-->
+        <!--Lista podciągana z ajax'a-->
         <div id="listOFsaved"></div>
     </div>
 </div>
@@ -136,7 +136,7 @@
     }
 
     //start function on load
-    changeList('{{ init.nm }}', '2018', 'az', 'yup');
+    changeList('{{ init.nm }}', '{{init.year}}', 'az', 'yup');
 
     /**
      * Przeładowanie listy na podstawie odpowiednich parametrów
@@ -155,6 +155,22 @@
         $("#listOFsaved").load("/include_listOFsaved", {'nm': mm, 'year': year, 'az': az, 'stat': stat, 'user': user});
     }
 
+
+
+    /**
+     @namespace
+     @pattern
+     @name return_user_list_in_month: def
+     @param nm: int numer miesiąca do wyświetlenia ( od 0 do 11 )
+     @param year : int wybrany rok ( 2018 )
+     @param az : bool sortowanie od a-z ( True ) lub od z-a ( False )
+     @param stat : bool sortowanie po statusie opłacony ( True ) lub nieopłacony ( False )
+     @param search : str przesłanie stringa, po którym szukana będzie osoba zapisana na miesiąc podany wyżej, jeśli parametr pusty to nie szukaj
+
+    @return tuple( [ id, user, date, status, color, id ],  ):
+
+    przyklad = ([Jan Kowalski, Styczeń 2018, Opłacono, green, 42], [Adam Nowak, Styczeń 2018, Nieopłacono, red, 69])
+     */
 
     /**
      * Przejście do danych użytkownika odnośnie rozliczenia
