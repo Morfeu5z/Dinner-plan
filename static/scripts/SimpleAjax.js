@@ -44,12 +44,12 @@
                 }
             };
             Request.open(method, path);
-            var data_to_send = JSON.stringify(dict)
+            var data_to_send = JSON.stringify(dict);
             console.log("Json to send: " + data_to_send);
             Request.send(data_to_send);
         }
         var param = localStorage.jsonfromajaxresponse;
-        param = JSON.parse(param);
+        param = param ? JSON.parse(param) : 'Empty ajax callback.';
         localStorage.removeItem('jsonfromajaxresponse');
         return param.param;
     }

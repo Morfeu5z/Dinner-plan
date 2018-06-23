@@ -54,5 +54,4 @@ function submit_registry() {
     send_box.push($("#repeat_pass").val());
     // log(send_box, 'i');
     var registry_callback = simpleAjax(send_box, 'registry');
-    log(registry_callback, 'ax');
 }
