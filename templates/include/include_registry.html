@@ -1,6 +1,6 @@
 <!-- Rejestracja -->
 <div class="col-8 mx-auto p-5 card shadow-lg">
-    <form action="/registry" method="post">
+    <form>
         <div class="input-grup">
             <div class="row">
                 <div class="col display-4">
@@ -15,45 +15,45 @@
             </div>
             <div class="row">
                 <div class="col m-1 mt-3 text-monospace">
-                    <input class="form-control text-center bg-" type="text" placeholder="Imię" id="in1"
-                           oninput="progress(1)" maxlength="100" pattern="[A-Za-z ]{6,100}"
+                    <input class="form-control text-center bg-" type="text" placeholder="Imię" id="first_name"
+                           oninput="progress(this)" maxlength="100" pattern="[A-Za-z ]{6,100}"
                            title="Powinny się tu znaleźć znaki z alfabetu i nie powinno być ich mniej niż 6."
-                           name="name">
+                           name="first_name">
                 </div>
             </div>
             <div class="row">
                 <div class="col m-1 mt-3 text-monospace">
-                    <input class="form-control text-center bg-" type="text" placeholder="Nazwisko" id="in1-2"
-                           oninput="progress(1)" maxlength="100" pattern="[A-Za-z ]{6,100}"
+                    <input class="form-control text-center bg-" type="text" placeholder="Nazwisko" id="last_name"
+                           oninput="progress(this)" maxlength="100" pattern="[A-Za-z ]{6,100}"
                            title="Powinny się tu znaleźć znaki z alfabetu i nie powinno być ich mniej niż 6."
-                           name="name">
+                           name="last_name">
                 </div>
             </div>
             <div class="row">
                 <div class="col m-1 text-monospace">
-                    <input class="form-control text-center" type="email" placeholder="e-mail" id="in2"
-                           oninput="progress(2)" name="email">
+                    <input class="form-control text-center" type="email" placeholder="e-mail" id="email"
+                           oninput="progress(this)" name="email">
                 </div>
             </div>
             <div class="row">
                 <div class="col m-1 text-monospace">
-                    <input class="form-control text-center" type="password" placeholder="Hasło" id="in3"
-                           oninput="progress(3)" pattern="[A-Za-z0-9 ]{8,100}"
+                    <input class="form-control text-center" type="password" placeholder="Hasło" id="pass"
+                           oninput="progress(this)" pattern="[A-Za-z0-9 ]{8,100}"
                            title="Hasło musi posiadać co najmniej 8 znaków, alfabet i cyfry."
-                            name="pass1">
+                            name="pass">
                 </div>
             </div>
             <div class="row">
                 <div class="col m-1 text-monospace">
-                    <input class="form-control text-center" type="password" placeholder="Powtórz hasło" id="in4"
-                           oninput="progress(4)" pattern="[A-Za-z0-9 ]{8,100}"
-                            name="pass2">
+                    <input class="form-control text-center" type="password" placeholder="Powtórz hasło" id="repeat_pass"
+                           oninput="progress(this)" pattern="[A-Za-z0-9 ]{8,100}"
+                            name="repeat_pass">
                 </div>
             </div>
-            <div class="progress">
-                <div id="progressbar" class="progress-bar bg-info" role="progressbar" aria-valuenow="0"
-                     aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
+            <!--<div class="progress">-->
+                <!--<div id="progressbar" class="progress-bar bg-info" role="progressbar" aria-valuenow="0"-->
+                     <!--aria-valuemin="0" aria-valuemax="100"></div>-->
+            <!--</div>-->
             <div class="row">
                 <div class="col mt-2">
                     Więcej informacji znajdziesz <a href="#">tutaj</a>.
@@ -61,7 +61,7 @@
             </div>
             <div class="row">
                 <div class="col mt-3 text-monospace">
-                    <input class="btn btn-outline-info" id="sub" type="submit" value="Zarejestruj" disabled>
+                    <input class="btn btn-outline-info" id="sub" type="button" value="Zarejestruj" onclick="submit_registry()" disabled>
                 </div>
             </div>
             <div class="row">

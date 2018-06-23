@@ -4,8 +4,10 @@ from flask import Flask, render_template
 app = Flask(__name__)
 from log_reg import log_reg
 from admin_panel import admin_panel
+from static.blueprint.Rejestracja import sign_up
 
 app.register_blueprint(log_reg)
+app.register_blueprint(sign_up)
 app.register_blueprint(admin_panel)
 
 

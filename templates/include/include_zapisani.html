@@ -1,3 +1,5 @@
+<!-- Fragment wczytywany z include_menu  -->
+
 <script>log('Lista zapisanych', 'l')</script>
 <link rel=stylesheet type=text/css href="../static/style/zapisani.css">
 
@@ -21,7 +23,8 @@
                 <button class="alx-btn-nav" onclick="showPanel('menu')"><i class="icon-angle-double-left"></i>Menu
                 </button>
                 <input id="search" class="alx-input-search" type="text" placeholder="Szukaj...">
-                <button id="searchbtn" class="alx-btn-search" onclick="searchUser()"><i class="icon-search-6"></i></button>
+                <button id="searchbtn" class="alx-btn-search" onclick="searchUser()"><i class="icon-search-6"></i>
+                </button>
                 <button class="alx-btn-nav" onclick="showPanel('menu')">Dodaj <i class="icon-edit"></i></button>
             </div>
         </div>
@@ -38,7 +41,7 @@
             </div>
             <div class="col-4 m-auto">
                 <button class="alx-btn-nav x-auto" onclick="prevM()"><i class="icon-angle-left"></i></button>
-                <span id="miesiac"></span>
+                <div class="d-inline" id="miesiac"></div>
                 <button class="alx-btn-nav x-auto" onclick="nextM()"><i class="icon-angle-right"></i></button>
             </div>
             <div class="col-2 m-auto">
@@ -56,26 +59,23 @@
 
 <script>
     // nr of month
-    nm = parseInt('{{ init.nm }}');
+    var nm = parseInt('{{ init.nm }}'),
     //year
-    year = parseInt('{{init.year}}');
+    year = parseInt('{{init.year}}'),
     //list of month 0 - styczen, 11 - grudzien
-    miesiace = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień']
+    miesiace = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
+    //a-z or z-a
+    az = true,
+    //status of pay, yup or nope
+    stat = true;
+
     //Wpisanie odpowiedniego miesiąca
     $('#miesiac').text(miesiace[nm]);
-    //a-z or z-a
-    az = 'az';
-    //status of pay, yup or nope
-    stat = 'yup';
-
 
     //On next month
     function nextM() {
         nm++;
-        if (nm > 11) {
-            nm = 0;
-            year++;
-        }
+        if (nm > 11) nm = 0, year++;
         $('#miesiac').text(miesiace[nm]);
         changeList(nm, year, az, stat);
     }
@@ -83,32 +83,20 @@
     //On prev month
     function prevM() {
         nm--;
-        if (nm < 0) {
-            nm = 11;
-            year--;
-        }
+        if (nm < 0) nm = 11, year--;
         $('#miesiac').text(miesiace[nm]);
         changeList(nm, year, az, stat);
     }
 
     //Change sort of paid/not paid
     function sortPaid() {
-        if (stat == 'yup') {
-            stat = 'nope';
-        } else {
-            stat = 'yup';
-        }
-        changeList(nm, year, az, stat);
+        changeList(nm, year, az, !stat);
     }
+
 
     //Change sort of name
     function sortName() {
-        if (az == 'az') {
-            az = 'za';
-        } else {
-            az = 'az';
-        }
-        changeList(nm, year, az, stat);
+        changeList(nm, year, !az, stat);
     }
 
     /**
@@ -124,19 +112,16 @@
     var input = document.getElementById("search");
     input.addEventListener("keyup", function (event) {
         event.preventDefault();
-        if (event.keyCode === 13) {
-            document.getElementById("searchbtn").click();
-        }
+        if (event.keyCode === 13) $("#searchbtn").click();
     });
 
     //Wyszukiwarka
     function searchUser() {
-        var sear = $('#search').val();
-        changeList(nm, year, az, stat, sear);
+        changeList(nm, year, az, stat, $('#search').val());
     }
 
     //start function on load
-    changeList('{{ init.nm }}', '{{init.year}}', 'az', 'yup');
+    changeList('{{ init.nm }}', '{{init.year}}', true, true);
 
     /**
      * Przeładowanie listy na podstawie odpowiednich parametrów
@@ -147,15 +132,9 @@
      */
     function changeList(mm, year, az, stat, search) {
         var user = 'none';
-        if (search) {
-            if (search.length > 2) {
-                user = search;
-            }
-        }
+        user = search ? (search.length > 2 ? search : user) : user;
         $("#listOFsaved").load("/include_listOFsaved", {'nm': mm, 'year': year, 'az': az, 'stat': stat, 'user': user});
     }
-
-
 
     /**
      @namespace
@@ -167,9 +146,9 @@
      @param stat : bool sortowanie po statusie opłacony ( True ) lub nieopłacony ( False )
      @param search : str przesłanie stringa, po którym szukana będzie osoba zapisana na miesiąc podany wyżej, jeśli parametr pusty to nie szukaj
 
-    @return tuple( [ id, user, date, status, color, id ],  ):
+     @return tuple( [ id, user, date, status, color, id ],  ):
 
-    przyklad = ([Jan Kowalski, Styczeń 2018, Opłacono, green, 42], [Adam Nowak, Styczeń 2018, Nieopłacono, red, 69])
+     przyklad = ([Jan Kowalski, Styczeń 2018, Opłacono, green, 42], [Adam Nowak, Styczeń 2018, Nieopłacono, red, 69])
      */
 
     /**

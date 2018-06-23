@@ -57,35 +57,25 @@ def testData(nm):
             'id':'3'
         }]
     else:
-        list = [{
-            'name': 'Aleksander Sinkowski',
-            'date': 'Luty 2018',
-            'stat': 'Opłacono',
-            'color': 'green',
-            'id':'1'
-        }, {
-            'name': 'Serhii Riznychuk',
-            'date': 'Luty 2018',
-            'stat': 'Nie opłacono',
-            'color': 'red',
-            'id':'2'
-        }, {
-            'name': 'Mikołaj Rychel',
-            'date': 'Luty 2018',
-            'stat': 'Opłacono',
-            'color': 'green',
-            'id':'3'
-        }]
+        list = []
+        for x in range(400):
+            list.append({
+                'name': 'Aleksander Sinkowski',
+                'date': 'Luty 2018',
+                'stat': 'Opłacono',
+                'color': 'green',
+                'id':'1'
+            })
     return list
 
 
-def asd(x, y):
-    """
-    :param
-    arg1 : int
-        dpsdjopsjod
-    :namespace
-    :pattern
+@admin_panel.route("/include_listOFsaved", methods=['POST'])
+def listOfsaved():
+    '''
+    * Funkcja przyjmuje cztery parametry z posta
+    * i przekazuje je do funkcji zwracającej
+    * listę użytkowników zapisanych do stołóki
+
     :name return_user_list_in_month: def
     :param nm: int numer miesiąca do wyświetlenia ( od 0 do 11 )
     :param year : int wybrany rok ( 2018 )
@@ -96,18 +86,8 @@ def asd(x, y):
     :return tuple( [ id, user, date, status, color, id ],  ):
 
     przyklad = ([Jan Kowalski, Styczeń 2018, Opłacono, green, 42], [Adam Nowak, Styczeń 2018, Nieopłacono, red, 69])
-    """
-    return x + y
-
-
-@admin_panel.route("/include_listOFsaved", methods=['POST'])
-def listOfsaved():
     '''
-    * Funkcja przyjmuje cztery parametry z posta
-    * i przekazuje je do funkcji zwracającej
-    * listę użytkowników zapisanych do stołóki
-    :return: view with users list
-    '''
+
     # nr of month, 0 - styczen, 11 - grudzien
     nm = request.form.get('nm')
     # year

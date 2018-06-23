@@ -1,70 +1,58 @@
-var progresbar = 0;
-var passok = false;
-var lista = [0, 0, 0, 0];
+var list = [false, false, false, false];
 
 /**
- * Sprawdzanie okna rejestracji na bierząco
- * Wyświetlanie paska postępu
- * @param input
+ * Inspektor okna rejestracji
+ * @param obj
  */
-function progress(input) {
-    if (input == 1) {
-        if ($("#in1").val() == '') {
-            lista[0] = 0;
-        } else {
-            lista[0] = 25;
-        }
-    } else if (input == 2) {
-        if ($("#in2").val() == '') {
-            lista[1] = 0;
-        } else {
-            lista[1] = 25;
-        }
-    } else if (input == 3) {
-        if ($("#in3").val() == '') {
-            lista[2] = 0;
-        } else {
-            lista[2] = 25;
-        }
-    } else if (input == 4) {
-        if ($("#in4").val() == '') {
-            lista[3] = 0;
-        } else {
-            lista[3] = 25;
-        }
+function progress(obj) {
+    var switcher = obj.name;
+    // Sprawdza i ustala które pola zostały wypełnione
+    switch (switcher) {
+        case 'first_name':
+            list[0] = obj.value.length > 2 ? true : false;
+            break;
+        case 'last_name':
+            list[1] = obj.value.length > 2 ? true : false;
+            break;
+        case 'email':
+            list[2] = obj.value.length > 5 ? true : false;
+            break;
+        case 'pass':
+            var len = $('#pass').val();
+            len = $('#pass').val() != $('#repeat_pass').val() ? "#FFA58F" : (len.length >= 8 ? "#BBFFB5" : "#FFA58F");
+            $('#repeat_pass').css("background-color", len);
+            list[3] = len != "#FFA58F" ? true : false;
+            break;
+        case 'repeat_pass':
+            var len = $('#repeat_pass').val();
+            len = $('#pass').val() != $('#repeat_pass').val() ? "#FFA58F" : (len.length >= 8 ? "#BBFFB5" : "#FFA58F");
+            $('#repeat_pass').css("background-color", len);
+            list[3] = len != "#FFA58F" ? true : false;
+            break;
     }
-    progresbar = lista[0] + lista[1] + lista[2] + lista[3];
-    $("#progressbar").width(progresbar + "%");
-    console.log("Update progress: " + progresbar);
-    $("#progressbar").text(progresbar + "%");
-
-    var len = $('#in3').val();
-    if ($('#in3').val() != $('#in4').val()) {
-        $('#in4').css("background-color", "#FFA58F");
-    } else if (len.length >= 8) {
-        $('#in4').css("background-color", "#BBFFB5");
+    // Sprawdza czy wszystkie pola zostały wypełnione
+    var go_Registry = () => {
+        var callback = true;
+        list.forEach((item, index) => {
+            if (item == false) callback = false;
+            // log(`Item ${index}: ${item}`)
+        });
+        return callback;
     }
 
-    if (progresbar == 100) {
-        if ($('#in3').val() == $('#in4').val()) {
-            $("#sub").removeAttr('disabled');
-            $("#progressbar").text("OK");
-        } else {
-            $("#sub").attr('disabled', 'disabled');
-            $("#progressbar").text("Hasła nie są identyczne");
-        }
-    } else {
-        $("#sub").attr('disabled', 'disabled');
-    }
+    // Aktywowanie przycisku rejsetracji po wypełnieniu wszystkich pól
+    !go_Registry() ? $("#sub").attr('disabled', 'disabled') : $("#sub").removeAttr('disabled');
+    $("#sub").removeAttr('disabled');
 }
 
-/**
- * Aktywuje przycisk gdy w inputach jest jakaś wartość
- */
-function login() {
-    if ($('#inLog').val() != '' && $('#inPass').val() != '') {
-        $("#subLogin").removeAttr('disabled');
-    } else {
-        $("#subLogin").attr('disabled', 'disabled');
-    }
+function submit_registry() {
+    var send_box = [];
+    send_box.push($("#first_name").val()),
+    send_box.push($("#last_name").val()),
+    send_box.push($("#email").val()),
+    send_box.push($("#pass").val()),
+    send_box.push($("#repeat_pass").val());
+    // log(send_box, 'i');
+    var registry_callback = simpleAjax(send_box, 'registry');
+    log(registry_callback, 'ax');
 }

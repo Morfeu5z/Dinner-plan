@@ -1,3 +1,20 @@
+/**
+ * Funkcja wypisuje logi w konsoli
+ * @param mess;
+ * @param type;
+ *
+ * log(Prefix, Message)
+ * Lista prefixów:
+ * d - Debug
+ * cp - Control Point
+ * i - Info
+ * r - Run
+ * l - Loaded
+ * c - Clicked
+ * gt - Go to
+ * ax - Ajax callback
+ * default - Debug
+ */
 function log(mess, type = 'd') {
     if (localStorage.getItem('debuger') == 'true') {
         switch (type) {
@@ -21,6 +38,9 @@ function log(mess, type = 'd') {
                 break;
             case 'gt':
                 console.log('Go to: ' + mess);
+                break;
+            case 'ax':
+                console.log('Ajax callback: ' + mess);
                 break;
             default:
                 console.log('Debug: ' + mess)

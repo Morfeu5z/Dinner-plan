@@ -8,12 +8,12 @@ def log():
     passwd = request.form.get('pass')
     return email + ' ' + passwd
 
-
-@log_reg.route('/registry', methods=['POST'])
-def reg():
-    email = request.form.get('email')
-    passwd = request.form.get('pass1')
-    return email + ' ' + passwd
+#
+# @log_reg.route('/registry', methods=['POST'])
+# def reg():
+#     email = request.form.get('email')
+#     passwd = request.form.get('pass1')
+#     return email + ' ' + passwd
 
 
 @log_reg.route("/include_login")
