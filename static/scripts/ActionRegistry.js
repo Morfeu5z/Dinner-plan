@@ -46,12 +46,16 @@ function Progress(obj) {
 }
 
 function SubmitRegistry() {
-    var send_box = [];
-    send_box.push($("#first_name").val()),
-        send_box.push($("#last_name").val()),
-        send_box.push($("#email").val()),
-        send_box.push($("#pass").val()),
-        send_box.push($("#repeat_pass").val());
-    // log(send_box, 'i');
+    var pass1 = $('#pass').val();
+    pass1 = CryptoJS.MD5(pass1);
+    var pass2 = $('#repeat_pass').val();
+    pass2 = CryptoJS.MD5(pass2);
+    var send_box = [
+        $("#first_name").val(),
+        $("#last_name").val(),
+        $("#email").val(),
+        String(pass1),
+        String(pass2)];
     var registry_callback = simpleAjax(send_box, 'registry');
+    log(registry_callback, 'i');
 }

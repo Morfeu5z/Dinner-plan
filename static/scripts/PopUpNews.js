@@ -1,4 +1,4 @@
-function DispalyMessage(message, timer, id) {
+function DispalyMessage(message='Info message', timer=4000, id='display_info_message') {
     $("#" + id).html("" +
         "<div " +
         "id='display_popup_who_was_created' " +

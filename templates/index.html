@@ -13,16 +13,20 @@
 
     <!--Body, do którego AJAX'em ładowane są fragmenty html'a-->
     <div id="include"></div>
-    <div id="dispaly_message"></div>
+    <div id="display_info_message"></div>
 
 </div>
 <div id="particles-js"></div>
 
 <script>
-    particlesJS.load('particles-js', '../static/particles.json', function () {
-        log('Particles config', 'l');
-        log('Particles', 'r')
-    });
+    try {
+        particlesJS.load('particles-js', '../static/particles.json', function () {
+            log('Particles config', 'l');
+            log('Particles', 'r')
+        });
+    }catch (e) {
+        window.location.href='/';
+    }
     document.write('<button style="position: fixed; top: 0; right: 0;" onclick="refresh()">Refresh</button>\n');
 
     function refresh() {
