@@ -2,33 +2,26 @@ from flask import Flask, render_template
 
 # from my_app import app
 app = Flask(__name__)
-from log_reg import log_reg
-from admin_panel import admin_panel
-from static.blueprint.Rejestracja import sign_up
+from static.blueprint.ActionLogin import action_login
+from static.blueprint.ActionAdmin import action_admin
+from static.blueprint.ActionRegistry import action_registry
 
-app.register_blueprint(log_reg)
-app.register_blueprint(sign_up)
-app.register_blueprint(admin_panel)
+app.register_blueprint(action_login)
+app.register_blueprint(action_registry)
+app.register_blueprint(action_admin)
 
 
 @app.route("/")
 def home():
+    '''
+    Strona startowa HOME
+    z konfiguracją
+    :return:
+    '''
     init = {
         'title': 'Dinner Plan',
         'css':'index',
-        'onStart': 'login',
-        'js': 'registry'
-    }
-    return render_template('index.html', init=init)
-
-
-@app.route("/panel")
-def admin():
-    init = {
-        'title': 'Panel zarządzania',
-        'css':'menu',
-        'onStart': 'menu',
-        'js': 'menu'
+        'onStart': 'login'
     }
     return render_template('index.html', init=init)
 

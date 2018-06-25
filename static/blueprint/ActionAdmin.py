@@ -1,12 +1,28 @@
 from datetime import date, datetime
-
+from static.blueprint.TestData import testData
 from flask import Blueprint, render_template, request
 
-admin_panel = Blueprint('admin_panel', __name__, template_folder='templates')
+action_admin = Blueprint('action_admin', __name__, template_folder='templates')
 
 
-@admin_panel.route("/include_menu")
+@action_admin.route("/panel")
+def AdminPanel():
+    init = {
+        'title': 'Panel zarządzania',
+        'css':'menu',
+        'onStart': 'menu',
+        'js': 'menu'
+    }
+    return render_template('index.html', init=init)
+
+
+@action_admin.route("/include_menu")
 def menu():
+    '''
+    Funkcja ładująca menu funkcji
+    po zalogowaniu do
+    :return:
+    '''
     data = {
         'status': 'Administrator',
         'user': 'Aleksander Sinkowski'
@@ -14,7 +30,7 @@ def menu():
     return render_template('include/include_menu.html', init=data)
 
 
-@admin_panel.route("/include_zapisani")
+@action_admin.route("/include_zapisani")
 def listOfsavedBase():
     '''
     * Renderuje stronę z podstawowym widokiem,
@@ -29,47 +45,7 @@ def listOfsavedBase():
     return render_template('include/include_zapisani.html', init=init)
 
 
-def testData(nm):
-    '''
-    * Funkcja z danymi testowymi,
-    * przyjmuje numer miesiąca
-    :param nm:
-    :return: test - list of users
-    '''
-    if nm == '0':
-        list = [{
-            'name': 'Aleksander Sinkowski',
-            'date': 'Styczeń 2018',
-            'stat': 'Opłacono',
-            'color': 'green',
-            'id':'1'
-        }, {
-            'name': 'Serhii Riznychuk',
-            'date': 'Styczeń 2018',
-            'stat': 'Opłacono',
-            'color': 'green',
-            'id':'2'
-        }, {
-            'name': 'Mikołaj Rychel',
-            'date': 'Styczeń 2018',
-            'stat': 'Nie opłacono',
-            'color': 'red',
-            'id':'3'
-        }]
-    else:
-        list = []
-        for x in range(400):
-            list.append({
-                'name': 'Aleksander Sinkowski',
-                'date': 'Luty 2018',
-                'stat': 'Opłacono',
-                'color': 'green',
-                'id':'1'
-            })
-    return list
-
-
-@admin_panel.route("/include_listOFsaved", methods=['POST'])
+@action_admin.route("/include_listOFsaved", methods=['POST'])
 def listOfsaved():
     '''
     * Funkcja przyjmuje cztery parametry z posta

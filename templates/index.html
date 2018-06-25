@@ -13,11 +13,10 @@
 
     <!--Body, do którego AJAX'em ładowane są fragmenty html'a-->
     <div id="include"></div>
+    <div id="dispaly_message"></div>
 
 </div>
 <div id="particles-js"></div>
-
-<script src="../static/scripts/{{ init.js }}.js"></script>
 
 <script>
     particlesJS.load('particles-js', '../static/particles.json', function () {
@@ -25,6 +24,7 @@
         log('Particles', 'r')
     });
     document.write('<button style="position: fixed; top: 0; right: 0;" onclick="refresh()">Refresh</button>\n');
+
     function refresh() {
         showPanel(localStorage.getItem('where'));
     }

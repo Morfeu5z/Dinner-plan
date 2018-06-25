@@ -1,5 +1,6 @@
 <!-- Logowanie -->
-<div class="col-8 mx-auto p-5 card shadow-lg">
+<script src="/static/scripts/ActionLogin.js"></script>
+<div class="col-sm-12 col-md-8 mx-auto p-5 card shadow-lg">
     <form action="/login" method="post">
         <div class="input-grup">
             <div class="row">
@@ -15,16 +16,23 @@
             </div>
             <div class="row">
                 <div class="col m-1 text-monospace">
-                    <input class="form-control text-center" type="email" placeholder="E-mail" id="inLog" oninput="login()"
-                    name="email">
+                    <input class="form-control text-center"
+                           type="email"
+                           placeholder="E-mail"
+                           id="email" oninput="SignInMe(this)"
+                           name="email">
                 </div>
             </div>
             <div class="row">
                 <div class="col m-1 text-monospace">
-                    <input class="form-control text-center" type="password" placeholder="Hasło"
-                           pattern="[A-Za-z0-9 ]{8,100}" id="inPass" oninput="login()"
+                    <input class="form-control text-center"
+                           type="password"
+                           placeholder="Hasło"
+                           pattern="[A-Za-z0-9 ]{8,100}"
+                           id="pass"
+                           oninput="SignInMe(this)"
                            title="Hasło musi posiadać co najmniej 8 znaków, alfabet i cyfry."
-                            name="pass">
+                           name="pass">
                 </div>
             </div>
             <div class="row">
@@ -34,13 +42,24 @@
             </div>
             <div class="row">
                 <div class="col mt-3 text-monospace">
-                    <input class="btn btn-outline-info" id="subLogin" type="submit" value="Zaloguj" disabled>
-                    <input class="btn btn-outline-info" id="test" type="button" value="test">
+                    <input class="btn btn-outline-info"
+                           id="sign_in"
+                           type="submit"
+                           value="Zaloguj"
+                           disabled>
+
+                    <input class="btn btn-outline-info"
+                           id="test"
+                           type="button"
+                           value="test">
                 </div>
             </div>
             <div class="row">
                 <div class="col mt-2 text-monospace">
-                    <input class="btn btn-outline-secondary" id="goToReg" type="button" value="Zarejestruj się!"
+                    <input class="btn btn-outline-secondary"
+                           id="goToReg"
+                           type="button"
+                           value="Zarejestruj się!"
                            onclick="showPanel('registry')">
                 </div>
             </div>
@@ -48,7 +67,7 @@
     </form>
 </div>
 <script>
-    $('#test').bind( "click", function() {
-        showPanel('menu');
-    })
+    var message ="Witaj w Dinner Plan. Zaloguj się by przejść dalej.";
+    DispalyMessage(message, 4000, 'dispaly_message')
 </script>
+

@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, request, jsonify
 
-sign_up = Blueprint('sign_up', __name__, template_folder='templates')
+action_registry = Blueprint('action_registry', __name__, template_folder='templates')
 
-@sign_up.route('/registry', methods=['POST'])
+@action_registry.route('/registry', methods=['POST'])
 def registry_action():
     catchData = request.get_json(force=True)
     catchData = catchData['param']
