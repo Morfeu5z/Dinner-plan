@@ -92,7 +92,7 @@ class User(Base):
     id_permission = Column(ForeignKey('permission.id'), index=True)
 
     permission = relationship('Permission', primaryjoin='User.id_permission == Permission.id', backref='users')
-    userlist = user = relationship("Userlist", primaryjoin='Userlist.id_user == User.id', back_populates="user")
+    userlist = relationship("Userlist", primaryjoin='Userlist.id_user == User.id', back_populates="user")
 
     def __init__(self, email: str, password: str, name: str, lastname:str, permission : int):
         self.email = email
