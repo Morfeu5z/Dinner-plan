@@ -1,3 +1,5 @@
+from flask import session
+
 
 def testData(nm):
     '''
@@ -37,3 +39,10 @@ def testData(nm):
                 'id':'1'
             })
     return list
+
+
+def testLogin():
+    session['user_id'] = 1
+    session['user_email'] = 'k.brzeczyszczykiewicz@gmail.com'
+    session['user_first_name'] = "Krzysztof"
+    session['user_last_name'] = "Brzęczyszczykiewicz"

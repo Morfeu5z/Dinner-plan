@@ -24,16 +24,16 @@ function runPassChecker(obj) {
 }
 
 
+function get_data_from_ajax(json) {
+    DispalyMessage(json[1]);
+    log(json);
+}
+
+
 function CheckLoginWithAjax() {
     log('Check login', 'i');
     var pass = $('#pass').val();
     var hash_pass = CryptoJS.MD5(pass);
     var login_data = [$('#email').val(), String(hash_pass)];
-    var status = simpleAjax(login_data, 'tryLogin');
-    if (status == undefined) {
-        DispalyMessage('Bład połączenia, spróbuj zalogować się raz jeszcze.')
-    } else {
-        DispalyMessage('Logowanie powiodło się.')
-    }
-    log(status, 'i');
+    simpleAjax(get_data_from_ajax, login_data, 'tryLogin');
 }

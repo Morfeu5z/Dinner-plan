@@ -1,4 +1,6 @@
-from flask import Flask, render_template
+import os
+
+from flask import Flask, render_template, session
 
 # from my_app import app
 app = Flask(__name__)
@@ -10,6 +12,7 @@ app.register_blueprint(action_login)
 app.register_blueprint(action_registry)
 app.register_blueprint(action_admin)
 
+app.secret_key = os.urandom(24)
 
 @app.route("/")
 def home():
