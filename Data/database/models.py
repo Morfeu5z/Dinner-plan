@@ -61,17 +61,6 @@ class Dinnercomposit(Base):
         self.id_dinnerset = id_dinnerset
 
 
-"""
-class Dinnertime(Base):
-    __tablename__ = 'dinnertime'
-    id = Column(Integer, primary_key=True)
-    id_dinnertype = Column(ForeignKey('dinnertype.id'), index=True)
-    dinnertype = relationship('Dinnertype', primaryjoin='Dinnertime.id_dinnertype == Dinnertype.id', backref='dinnertimes')
-
-    def __init__(self, id_dinnertype: str):
-        self.id_dinnertype = id_dinnertype
-"""
-
 class Dinnertype(Base):
     __tablename__ = 'dinnertype'
     id = Column(Integer, primary_key=True)
@@ -119,11 +108,13 @@ class Userlist(Base):
     id_user = Column(ForeignKey('user.id'), index=True)
     id_dinnerset = Column(ForeignKey('dinnerset.id'), index=True)
     bought = Column(Integer, server_default=FetchedValue())
+    dinnerdate = Column(Date)
 
     dinnerset = relationship('Dinnerset', primaryjoin='Userlist.id_dinnerset == Dinnerset.id', backref='userlists')
     user = relationship('User', primaryjoin='Userlist.id_user == User.id', backref='userlists')
 
-    def __init__(self, id_user, id_dinnerset, bought):
+    def __init__(self, id_user, id_dinnerset, bought, dinnerdate):
         self.id_user = id_user
         self.id_dinnerset = id_dinnerset
         self.bought= bought
+        self.dinnerdate = dinnerdate

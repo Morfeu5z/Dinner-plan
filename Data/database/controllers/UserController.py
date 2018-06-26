@@ -273,51 +273,10 @@ class DinnerCompositController(IConnector):
         for x in find:
             yield x
 
-"""
-class DayController(IConnector):
-
-    def create(self, day_date: date, id_dinnerset: int):
-        day = Day(day_date, id_dinnerset)
-        try:
-            self.session.add(day)
-            self.session.commit()
-        except:
-            self.session.rollback()
-            return None
-        return deepcopy(day)
-
-    def delete(self, id):
-        delete = self.session.query(Day).filter_by(id=id).first()
-        return_del_object = deepcopy(delete)
-        try:
-            self.session.delete(delete)
-            self.session.commit()
-        except:
-            self.session.rollback()
-            return None
-        return return_del_object
-
-    def update(self, id, day_date: date, id_dinnerset: int):
-        day = self.session.query(Day).filter_by(id=id).first()
-        day.id_dinnerset = id_dinnerset
-        day.day = day_date
-        try:
-            self.session.commit()
-        except:
-            self.session.rollback()
-            return None
-        return deepcopy(day)
-
-    def __iter__(self):
-        Objects = self.session.query(Day)
-        for Object in Objects:
-            yield Object
-"""
-
 class UserListController(IConnector):
 
-    def create(self, id_user: str, id_dinnerset, bought:bool):
-        userlist = Userlist(id_user, id_dinnerset, bought)
+    def create(self, id_user: str, id_dinnerset, bought:bool, dinnerdate):
+        userlist = Userlist(id_user, id_dinnerset, bought, dinnerdate)
         try:
             self.session.add(userlist)
             self.session.commit()
@@ -337,11 +296,12 @@ class UserListController(IConnector):
             return None
         return return_del_object
 
-    def update(self, id: int, id_user, id_dinnerset, bought=False):
+    def update(self, id: int, id_user, id_dinnerset, bought, dinnerdate):
         Userl = self.session.query(Userlist).filter_by(id=id).first()
         Userl.id_dinnerset = id_dinnerset
         Userl.id_user = id_user
         Userl.bought = bought
+        Userl.dinnerdate = dinnerdate
         try:
             self.session.commit()
         except:
