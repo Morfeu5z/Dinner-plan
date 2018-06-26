@@ -4,7 +4,7 @@ from my_app.Catalog.Model import User
 
 catalog = Blueprint('catalog', __name__)
 
-
+"""
 @catalog.route("/")
 @catalog.route("/home")
 def home():
@@ -29,7 +29,7 @@ def users():
         }
     return jsonify(res)
 
-
+Пов’язане зображенняПов’язане зображенняПов’язане зображення
 @catalog.route("/user-create", method=['Post',])
 def create_user():
     name = request.form.get('name')
@@ -39,3 +39,4 @@ def create_user():
     db.session.add(user)
     db.session.commit()
     return 'Product Created'
+"""
