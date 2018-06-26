@@ -1,6 +1,6 @@
 from datetime import date, datetime
 from static.blueprint.TestData import testData
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, session, redirect
 
 action_admin = Blueprint('action_admin', __name__, template_folder='templates')
 
@@ -18,17 +18,19 @@ def AdminPanel():
 
 @action_admin.route("/include_menu")
 def menu():
-    '''
-    Funkcja ładująca menu funkcji
-    po zalogowaniu do
-    :return:
-    '''
-    data = {
-        'status': 'Administrator',
-        'user': 'Aleksander Sinkowski'
-    }
-    return render_template('include/include_menu.html', init=data)
-
+    if 'user_premission' in session:
+        '''
+        Funkcja ładująca menu funkcji
+        po zalogowaniu do
+        :return:
+        '''
+        premission = 'Administrator' if session['user_premission'] == 1 else 'Użytkownik'
+        data = {
+            'status': premission,
+            'user': session['user_first_name'] + ' ' + session['user_last_name']
+        }
+        return render_template('include/include_menu.html', init=data)
+    return redirect('/include_login')
 
 @action_admin.route("/include_zapisani")
 def listOfsavedBase():
@@ -80,5 +82,6 @@ def listOfsaved():
     # Tworzenie testowej listy
     # Tu musi sie znaleźć funkcja przyjmująca parametry wypisywane powyżej
     list = testData(nm)
+
 
     return render_template('include/include_listOFsaved.html', list=list)

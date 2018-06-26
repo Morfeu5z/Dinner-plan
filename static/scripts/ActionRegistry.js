@@ -45,7 +45,17 @@ function Progress(obj) {
     !go_Registry() ? $("#sub").attr('disabled', 'disabled') : $("#sub").removeAttr('disabled');
 }
 
+function get_data_from_ajax(json) {
+    log(json[0]);
+    if (json[0] == true) {
+        showPanel('menu');
+    }
+    DispalyMessage(json[1]);
+    log(json);
+}
+
 function SubmitRegistry() {
+    DispalyMessage('Trwa rejestracja...');
     var pass1 = $('#pass').val();
     pass1 = CryptoJS.MD5(pass1);
     var pass2 = $('#repeat_pass').val();
@@ -56,6 +66,7 @@ function SubmitRegistry() {
         $("#email").val(),
         String(pass1),
         String(pass2)];
-    var registry_callback = simpleAjax(send_box, 'registry');
-    log(registry_callback, 'i');
+    log(send_box);
+    simpleAjax(get_data_from_ajax, send_box, 'registry');
+    log('Try registry', 'i');
 }

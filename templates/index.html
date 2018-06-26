@@ -19,14 +19,10 @@
 <div id="particles-js"></div>
 
 <script>
-    try {
         particlesJS.load('particles-js', '../static/particles.json', function () {
             log('Particles config', 'l');
             log('Particles', 'r')
         });
-    }catch (e) {
-        window.location.href='/';
-    }
     document.write('<button style="position: fixed; top: 0; right: 0;" onclick="refresh()">Refresh</button>\n');
 
     function refresh() {

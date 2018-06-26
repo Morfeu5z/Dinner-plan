@@ -1,3 +1,8 @@
+<script>
+    if (!document.getElementById('include')) {
+        window.location.href = '/';
+    }
+</script>
 <link rel=stylesheet type=text/css href="../static/style/menu.css">
 <script>log('menu.css', 'l');</script>
 <div class="row">
@@ -7,10 +12,10 @@
 </div>
 <div class="row">
     <div class="col-4 ml-auto mr-2 my-2 p-4 card shadow menu_option" id="zapisani">
-        Okres rozliczeniowy
+        Rozliczenia
     </div>
     <div class="col-4 mr-auto ml-2 my-2 p-4 card shadow menu_option">
-        Budowanie kalendarza
+        Kalendarza
     </div>
 </div>
 <div class="row">
@@ -27,5 +32,10 @@
     })
     $('#zapisani').bind('click', function () {
         showPanel('zapisani');
+    })
+    $('#wyloguj').bind('click', function () {
+        clearSession();
+        localStorage.clear();
+        showPanel('login');
     })
 </script>

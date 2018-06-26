@@ -1,4 +1,9 @@
 <!-- Logowanie -->
+<script>
+    if (!document.getElementById('include')) {
+        window.location.href = '/';
+    }
+</script>
 <script src="/static/scripts/ActionLogin.js"></script>
 <script src="/static/scripts/Crypto-JS_md5.js"></script>
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>-->
@@ -51,9 +56,10 @@
                            disabled>
 
                     <input class="btn btn-outline-info"
-                           id="test"
+                           id="test_login"
                            type="button"
-                           value="test">
+                           value="test"
+                           onclick="CheckLoginWithAjaxTest()">
                 </div>
             </div>
             <div class="row">

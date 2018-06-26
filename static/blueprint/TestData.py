@@ -43,6 +43,7 @@ def testData(nm):
 
 def testLogin():
     session['user_id'] = 1
+    session['user_premission'] = 1
     session['user_email'] = 'k.brzeczyszczykiewicz@gmail.com'
     session['user_first_name'] = "Krzysztof"
     session['user_last_name'] = "Brzęczyszczykiewicz"

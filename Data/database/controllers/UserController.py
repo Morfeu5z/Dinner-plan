@@ -4,6 +4,11 @@ import hashlib
 from ...database import IConnector
 from copy import deepcopy
 
+
+class Rollback(IConnector):
+    def rollback(self):
+        self.session.rollback()
+
 class UserController(IConnector):
 
     def regestration(self, email: str, password: str, name: str, lastname:str, permission : int = 2) -> int:
@@ -16,17 +21,23 @@ class UserController(IConnector):
         :param permission - id permission to object;
         :return: new user id
         """
+        """
         md5 = hashlib.md5()
         password = password.strip()
         md5.update(bytearray(password, encoding="UTF-8"))
-        new_user = User(email, md5.hexdigest(), name, lastname, permission)
+        """
+        #new_user = User(email, md5.hexdigest(), name, lastname, permission)
+        if(self.session.query(User).filter_by(email=email).count()):
+            return deepcopy(self.session.query(User).filter_by(email=email).filter_by(password=password).first())
+        new_user = User(email, password, name, lastname, permission)
         try:
             self.session.add(new_user)
             self.session.commit()
+            return deepcopy(new_user)
         except:
             self.session.rollback()
             return None
-        return new_user
+        return None
 
     def login(self, email: str, password : str) -> User:
         """
@@ -35,10 +46,7 @@ class UserController(IConnector):
         :param password: string
         :return: isset user data
         """
-        md5 = hashlib.md5()
-        password = password.strip()
-        md5.update(bytearray(password, encoding="UTF-8"))
-        user = self.session.query(User).filter_by(email=email).filter_by(password=md5.hexdigest()).first()
+        user = self.session.query(User).filter_by(email=email).filter_by(password=password).first()
         return user
 
     def change_permissions(self, id: int, id_permission: int):

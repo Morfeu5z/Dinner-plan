@@ -25,15 +25,28 @@ function runPassChecker(obj) {
 
 
 function get_data_from_ajax(json) {
+    log(json[0]);
+    if (json[0] == true) {
+        showPanel('menu');
+    }
     DispalyMessage(json[1]);
     log(json);
 }
 
 
 function CheckLoginWithAjax() {
+    DispalyMessage('Trwa logowanie...');
     log('Check login', 'i');
     var pass = $('#pass').val();
     var hash_pass = CryptoJS.MD5(pass);
     var login_data = [$('#email').val(), String(hash_pass)];
+    simpleAjax(get_data_from_ajax, login_data, 'tryLogin');
+}
+
+function CheckLoginWithAjaxTest() {
+    DispalyMessage('Test loging...');
+    var pass = 'kabanosy';
+    var hash_pass = CryptoJS.MD5(pass);
+    var login_data = ['aleks@vp.pl', String(hash_pass)];
     simpleAjax(get_data_from_ajax, login_data, 'tryLogin');
 }

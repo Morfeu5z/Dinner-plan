@@ -1,5 +1,9 @@
 <!-- Fragment wczytywany z include_menu  -->
-
+<script>
+    if (!document.getElementById('include')) {
+        window.location.href = '/';
+    }
+</script>
 <script>log('Lista zapisanych', 'l')</script>
 <link rel=stylesheet type=text/css href="../static/style/zapisani.css">
 
@@ -60,14 +64,14 @@
 <script>
     // nr of month
     var nm = parseInt('{{ init.nm }}'),
-    //year
-    year = parseInt('{{init.year}}'),
-    //list of month 0 - styczen, 11 - grudzien
-    miesiace = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
-    //a-z or z-a
-    az = true,
-    //status of pay, yup or nope
-    stat = true;
+        //year
+        year = parseInt('{{init.year}}'),
+        //list of month 0 - styczen, 11 - grudzien
+        miesiace = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
+        //a-z or z-a
+        az = true,
+        //status of pay, yup or nope
+        stat = true;
 
     //Wpisanie odpowiedniego miesiąca
     $('#miesiac').text(miesiace[nm]);
