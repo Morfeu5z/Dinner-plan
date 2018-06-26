@@ -15,7 +15,15 @@
             </div>
             <div class="row">
                 <div class="col m-1 mt-3 text-monospace">
-                    <input class="form-control text-center bg-" type="text" placeholder="Imię i nazwisko" id="in1"
+                    <input class="form-control text-center bg-" type="text" placeholder="Imię" id="in1"
+                           oninput="progress(1)" maxlength="100" pattern="[A-Za-z ]{6,100}"
+                           title="Powinny się tu znaleźć znaki z alfabetu i nie powinno być ich mniej niż 6."
+                           name="name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m-1 mt-3 text-monospace">
+                    <input class="form-control text-center bg-" type="text" placeholder="Nazwisko" id="in1-2"
                            oninput="progress(1)" maxlength="100" pattern="[A-Za-z ]{6,100}"
                            title="Powinny się tu znaleźć znaki z alfabetu i nie powinno być ich mniej niż 6."
                            name="name">
