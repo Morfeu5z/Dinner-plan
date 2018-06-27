@@ -43,7 +43,7 @@ def tryLogin():
     else:
         callback.append('Nieprawidlowe dane logowania.')
 
-    print(callback)
+    print("Callback: {}".format(callback))
     # session.clear()
     return jsonify({'param': callback});
 
