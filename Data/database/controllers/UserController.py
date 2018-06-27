@@ -1,5 +1,7 @@
 from ..models import User, Permission, Dinnerset, Dinnertype, Userlist, Dinner, Dinnercomposit
-from datetime import date
+from datetime import date, timedelta
+from sqlalchemy import or_
+import calendar
 import hashlib
 from ...database import IConnector
 from copy import deepcopy
@@ -43,6 +45,18 @@ class UserController(IConnector):
         """
         user = self.session.query(User).filter_by(email=email).filter_by(password=password).first()
         return user
+
+    def find_by_name_or_lastname(self, text:str):
+        text = text.strip()
+        users = list()
+        if len(text.split(" ")) > 1:
+            imie, nazwisko = text.split()
+            users = self.session.query(User).filter(or_(User.name.ilike('%{im}%'.format(im=imie)), User.lastname.ilike('%{nzw}%'.format(nzw=nazwisko)))).all()
+        elif len(text.split(" ")) == 1:
+            users = self.session.query(User).filter(or_(User.name.ilike('%{text}%'.format(text=text)), User.lastname.ilike('%{text}%'.format(text=text)))).all()
+        if len(users) == 0:
+            users = self.session.query(User).all()
+        return users
 
     def change_permissions(self, id: int, id_permission: int):
         user = self.session.query(User).filter_by(id=id)
@@ -330,6 +344,17 @@ class UserListController(IConnector):
         temp = self.session.query(Userlist).filter_by(id=id).first()
         return temp
 
+    def find_id_mies_rok(self, id_user, mies, rok):
+        """
+
+        :return:
+        """
+        start = date(rok, mies, 1)
+        finish = self.___add_months(start, 1)
+        for x in self.session.query(Userlist).filter_by(id_user=id_user).all():
+            if start <= x.dinnerdate <= finish:
+                yield x
+
     def __iter__(self):
         Objects = self.session.query(Userlist)
         for Object in Objects:
@@ -337,7 +362,12 @@ class UserListController(IConnector):
 
     #def get_user_lit(self, dinnertype=None, day_date=None, payed=None):
     #    if dinnertype != None
-
+    def ___add_months(self, sourcedate:date , months):
+         month = sourcedate.month - 1 + months
+         year = sourcedate.year + month // 12
+         month = month % 12 + 1
+         day = min(sourcedate.day,calendar.monthrange(year,month)[1])
+         return date(year,month,day)
 
 
 

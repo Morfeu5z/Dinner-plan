@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# import Data.tool.libtest
+import Data.tool.libtest
 import Data.conf
 from Data.tool.Arguments import Argumnets
 from Data.tool.Permission import Permission
