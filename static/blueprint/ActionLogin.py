@@ -41,7 +41,7 @@ def tryLogin():
             callback.append('John')
             callback.append('Doe')
     else:
-        callback.append('Nieprawidłowe dane logowania.')
+        callback.append('Nieprawidlowe dane logowania.')
 
     print(callback)
     # session.clear()
