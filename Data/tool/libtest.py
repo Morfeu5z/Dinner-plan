@@ -12,7 +12,7 @@ referense = {
 
 
 def __test__library(lib: str) -> bool:
-    isFounded = importlib.util.find_spec(lib) is not None
+    isFounded = importlib.util.find_spec(lib) is None
     if(isFounded):
         os.popen("pip install {}".format(" ".join(referense[lib])), mode="r").read()
         if (importlib.util.find_spec(lib) is not None):
