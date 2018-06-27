@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify, session, redirect
-from Data.database.controllers.UserController import UserController, Rollback
+from Data.database.controllers.UserController import UserController
 
 action_registry = Blueprint('action_registry', __name__, template_folder='templates')
 
