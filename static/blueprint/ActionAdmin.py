@@ -1,6 +1,7 @@
 from datetime import date, datetime
+import random
 
-from Data.database.controllers.UserController import UserController
+from Data.database.controllers.UserController import UserController, UserListController
 from static.blueprint.TestData import testData
 from flask import Blueprint, render_template, request, session, redirect
 
@@ -11,7 +12,7 @@ action_admin = Blueprint('action_admin', __name__, template_folder='templates')
 def AdminPanel():
     init = {
         'title': 'Panel zarządzania',
-        'css':'menu',
+        'css': 'menu',
         'onStart': 'menu',
         'js': 'menu'
     }
@@ -38,6 +39,7 @@ def menu():
 
     return redirect('/include_login')
 
+
 @action_admin.route("/include_zapisani")
 def listOfsavedBase():
     '''
@@ -47,7 +49,7 @@ def listOfsavedBase():
     '''
     # Parametry początkowe, powinien to być aktualny miesiąc i rok
     init = {
-        'nm': datetime.now().month - 1, # 0 - 11
+        'nm': datetime.now().month - 1,  # 0 - 11
         'year': datetime.now().year
     }
     return render_template('include/include_zapisani.html', init=init)
@@ -73,9 +75,9 @@ def listOfsaved():
     '''
 
     # nr of month, 0 - styczen, 11 - grudzien
-    nm = request.form.get('nm')
+    nm = int(request.form.get('nm')) + 1
     # year
-    year = request.form.get('year')
+    year = int(request.form.get('year'))
     # a - z or z - a
     az = request.form.get('az')
     # status of pay, yup or nope
@@ -84,31 +86,86 @@ def listOfsaved():
     search = request.form.get('user')
     print("Odebrano: {} - {} - {} - {} - {}".format(nm, year, az, stat, search))
 
-    # TODO Funkcja zwaracająca jsona z danymi
     # Tworzenie testowej listy
     # Tu musi sie znaleźć funkcja przyjmująca parametry wypisywane powyżej
-    list = testData(nm)
-    # list2 = []
-    # Dater = UserController()
-    # for x in Dater:
-    #     list2.append(x.id)
-    #     list2.append(x.name)
-    #     list2.append(x.lastname)
-    #     list2.append(x.email)
-    #     list2.append(x.id_permission)
-    #     list2.append(" -||- ")
-    # print("Dane: {}".format(list2))
+    # list = testData(nm)
+    id_list = []
+    dict = []
+    # users = Dater.find_mies_rok(int(nm), int(year))
+    if search == 'none':
+        Dater = UserListController()
+        for x in Dater.find_mies_rok(nm, year):
+            print(x.user.name)
+            if not x.user.id in id_list:
+                dictme = {
+                    'name': x.user.name + ' ' + x.user.lastname,
+                    'date': '{} - {}'.format(year, nm),
+                    'stat': 'Zapisany' if True == 1 else 'Nie zapisany',
+                    'color': 'green' if True else 'red',
+                    'id': x.user.id
+                }
+                dict.append(dictme)
+                id_list.append(x.user.id)
+    else:
+        Dater = UserController()
+        for x in Dater.find_by_name_or_lastname(search):
+            if not x.id in id_list:
+                dictme = {
+                    'name': x.name + ' ' + x.lastname,
+                    'date': '{} - {}'.format(year, nm),
+                    'stat': 'Zapisany',
+                    'color': 'green',
+                    'id': x.id
+                }
+                dict.append(dictme)
+                id_list.append(x.id)
 
-    return render_template('include/include_listOFsaved.html', list=list)
+    return render_template('include/include_listOFsaved.html', list=dict)
+
 
 @action_admin.route("/include_detail-of-user-dinners", methods=['POST'])
 def detail_dinner():
-    id = request.form.get('id')
-    nm = request.form.get('nm')
-    year = request.form.get('year')
+    id = int(request.form.get('id'))
+    # nr of month, 0 - styczen, 11 - grudzien
+    nm = int(request.form.get('nm')) + 1
+    # year
+    year = int(request.form.get('year'))
     print("ID: {} {} {}".format(id, nm, year))
-    Dater = UserController()
-    list = {'name':'Adam Małysz', 'list':[
-        {'date':'06/06/2018', 's':'checked', 'o':'checked', 'k':'', 'pay':'Opłacone', 'price':10,'pay_action':'disabled'},
-        {'date':'07/06/2018', 's':'', 'o':'checked', 'k':'checked', 'pay':'Zaległości', 'price':8, 'pay_action':''}]}
+    dict = []
+    Dater = UserListController()
+    user_name=''
+    user_lastname=''
+    for x in Dater.find_id_mies_rok(id, nm, year):
+        user_name=x.user.name
+        user_lastname=x.user.lastname
+        box = [0]
+        for x in range(3):
+            box.append('checked' if random.randint(1,3) == x else '')
+            box[0] = box[0] + 5 if box[x+1] == 'checked' else box[0]
+        box.append(random.randint(0,1))
+
+        if box[0] != 0:
+            dictme = {
+                'date': '{} - {}'.format(year, nm),
+                's': box[1],
+                'o': box[2],
+                'k': box[3],
+                'pay': 'Opłacono' if box[4] == 1 else 'Nie opłacono',
+                'price': box[0],
+                'pay_action': 'disabled' if [4] == 1 else '',
+                'color': 'green' if box[4] == 1 else 'red',
+                'btn_action':'Zaksięguj'
+            }
+            dict.append(dictme)
+
+    list = {
+        'name': user_name + ' ' + user_lastname,
+        'list': dict
+    }
+
+    # list = {'name': 'Adam Małysz', 'list': [
+    #     {'date': '06/06/2018', 's': 'checked', 'o': 'checked', 'k': '', 'pay': 'Opłacone', 'price': 10,
+    #      'pay_action': 'disabled'},
+    #     {'date': '07/06/2018', 's': '', 'o': 'checked', 'k': 'checked', 'pay': 'Zaległości', 'price': 8,
+    #      'pay_action': ''}]}
     return render_template('include/include_detail-of-user-dinners.html', init=list)

@@ -7,7 +7,8 @@
     localStorage.back_button = "zapisani";
 </script>
 <h2 class="p-3">-_ {{ init.name }} _-</h2>
-<div class="row mb-2 mt-1 alx-list">
+<hr>
+<div class="row mb-2 mt-1">
     <div class="col-2 m-auto">Data</div>
     <div class="col-2 m-auto">Śniadanie/ Obiad/ Kolacja</div>
     <div class="col-2 m-auto">Status</div>
@@ -17,15 +18,14 @@
 </div>
 {% for item in init.list %}
 <hr>
-<div class="row mb-2 mt-1 alx-list">
+<div class="row mb-2 mt-1">
     <div class="col-2 m-auto">{{ item.date }}</div>
     <div class="col-2 m-auto">
         <input type="checkbox" {{ item.s }}> _ <input type="checkbox" {{ item.o }}> _ <input type="checkbox" {{ item.k }}>
     </div>
     <div class="col-2 m-auto" style="color: {{ item.color }};">{{ item.pay }}</div>
     <div class="col-1 m-auto">
-        <button class="btn btn-outline-info"
-                onclick="showUserDinnerList('{{item.set}}')">
+        <button class="btn btn-outline-info">
             Menu
         </button>
     </div>
@@ -33,9 +33,8 @@
         {{ item.price }} zł
     </div>
     <div class="col-2 m-auto">
-        <button class="btn btn-outline-info" {{ item.pay_action }}
-                onclick="showUserDinnerList('{{item.id}}')">
-            Opłać
+        <button class="btn btn-outline-info" {{ item.pay_action }}>
+            {{item.btn_action}}
         </button>
     </div>
 </div>

@@ -75,9 +75,11 @@ h1 {
 .alx-list{
     transition: all 200ms !important;
 }
+/*
 .alx-list:hover{
     background: linear-gradient(#fff, #ddeaff, #fff);
 }
 .alx-list:first-child:hover{
     background: #fff;
 }
+*/

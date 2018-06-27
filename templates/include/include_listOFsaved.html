@@ -7,7 +7,7 @@
 </script>
 
 <!--Nagłówki-->
-        <div class="row mb-1 mt-2 font-weight-bold alx-list">
+        <div class="row mb-1 mt-2 font-weight-bold">
             <div class="col-3 m-auto">
                 Imię i nazwisko
                 <button class="alx-btn-nav x-auto" onclick="sortName()"><i class="icon-angle-down"></i></button>
@@ -26,7 +26,7 @@
         <!--Lista podciągana z ajax'a-->
 {% for item in list %}
 <hr>
-<div class="row mb-2 mt-1 alx-list">
+<div class="row mb-2 mt-1">
     <div class="col-3 m-auto">{{ item.name }}</div>
     <div class="col-4 m-auto">{{ item.date }}</div>
     <div class="col-2 m-auto" style="color: {{ item.color }};">{{ item.stat }}</div>
