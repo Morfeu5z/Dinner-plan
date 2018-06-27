@@ -1,4 +1,6 @@
 from datetime import date, datetime
+
+from Data.database.controllers.UserController import UserController
 from static.blueprint.TestData import testData
 from flask import Blueprint, render_template, request, session, redirect
 
@@ -29,7 +31,11 @@ def menu():
             'status': premission,
             'user': session['user_first_name'] + ' ' + session['user_last_name']
         }
-        return render_template('include/include_menu.html', init=data)
+        if session['user_premission'] == 1:
+            return render_template('include/include_menu-admin.html', init=data)
+        else:
+            return render_template('include/include_menu-user.html', init=data)
+
     return redirect('/include_login')
 
 @action_admin.route("/include_zapisani")
@@ -82,6 +88,27 @@ def listOfsaved():
     # Tworzenie testowej listy
     # Tu musi sie znaleźć funkcja przyjmująca parametry wypisywane powyżej
     list = testData(nm)
-
+    # list2 = []
+    # Dater = UserController()
+    # for x in Dater:
+    #     list2.append(x.id)
+    #     list2.append(x.name)
+    #     list2.append(x.lastname)
+    #     list2.append(x.email)
+    #     list2.append(x.id_permission)
+    #     list2.append(" -||- ")
+    # print("Dane: {}".format(list2))
 
     return render_template('include/include_listOFsaved.html', list=list)
+
+@action_admin.route("/include_detail-of-user-dinners", methods=['POST'])
+def detail_dinner():
+    id = request.form.get('id')
+    nm = request.form.get('nm')
+    year = request.form.get('year')
+    print("ID: {} {} {}".format(id, nm, year))
+    Dater = UserController()
+    list = {'name':'Adam Małysz', 'list':[
+        {'date':'06/06/2018', 's':'checked', 'o':'checked', 'k':'', 'pay':'Opłacone', 'price':10,'pay_action':'disabled'},
+        {'date':'07/06/2018', 's':'', 'o':'checked', 'k':'checked', 'pay':'Zaległości', 'price':8, 'pay_action':''}]}
+    return render_template('include/include_detail-of-user-dinners.html', init=list)

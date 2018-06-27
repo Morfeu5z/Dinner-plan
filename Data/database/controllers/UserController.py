@@ -3,8 +3,6 @@ from datetime import date
 import hashlib
 from ...database import IConnector
 from copy import deepcopy
-
-
 class UserController(IConnector):
 
     def regestration(self, email: str, password: str, name: str, lastname:str, permission : int = 2) -> int:
@@ -25,12 +23,12 @@ class UserController(IConnector):
         #new_user = User(email, md5.hexdigest(), name, lastname, permission)
         new_user = User(email, password, name, lastname, permission)
         if(self.session.query(User).filter_by(email=email).count()):
-            return deepcopy(self.session.query(User).filter_by(email=email).filter_by(password=password).first())
+            return (self.session.query(User).filter_by(email=email).filter_by(password=password).first())
         #new_user = User(email, password, name, lastname, permission)
         try:
             self.session.add(new_user)
             self.session.commit()
-            return deepcopy(new_user)
+            return new_user
         except:
             self.session.rollback()
 
@@ -54,11 +52,11 @@ class UserController(IConnector):
         except:
             self.session.rollback()
             return None
-        return deepcopy(user)
+        return user
 
     def delete_by_email(self, email):
         user_to_removing = self.session.query(User).filter_by(email=email).first()
-        user_to_return = deepcopy(user_to_removing)
+        user_to_return = user_to_removing
         try:
             self.session.delete(user_to_removing)
             self.session.commit()
@@ -69,7 +67,7 @@ class UserController(IConnector):
 
     def delete_by_id(self, id):
         user_to_removing = self.session.query(User).filter_by(id=id).first()
-        user_to_return = deepcopy(user_to_removing)
+        user_to_return = user_to_removing
         try:
             self.session.delete(user_to_removing)
             self.session.commit()
@@ -77,6 +75,9 @@ class UserController(IConnector):
             self.session.rollback()
             return None
         return user_to_return
+
+    def find_by_email(self, email):
+        return True if self.session.query(User).filter_by(email=email).count() else False
 
     def __iter__(self):
         users = self.session.query(User)
@@ -98,7 +99,7 @@ class PermissionsController(IConnector):
 
     def delete(self, id):
         delete = self.session.query(Permission).filter_by(id=id).first()
-        return_del_object = deepcopy(delete)
+        return_del_object = delete
         try:
             self.session.delete(delete)
             self.session.commit()
@@ -135,12 +136,12 @@ class DinnerController(IConnector):
             except:
                 self.session.rollback()
                 return None
-            return deepcopy(update)
+            return update
 
     def delete(self, id):
         if not (self.session.query(Dinnerset).filter_by(id_dinner=id).count()):
             delete = self.session.query(Dinner).filter_by(id=id).first()
-            return_del_object = deepcopy(delete)
+            return_del_object = delete
             try:
                 self.session.delete(delete)
                 self.session.commit()
@@ -156,11 +157,11 @@ class DinnerController(IConnector):
 
     def find_by_id(self, id):
         find = self.session.query(Dinner).filter_by(id=id).first()
-        return deepcopy(find)
+        return find
 
     def find_by_dinner(self, dinner):
         find = self.session.query(Dinner).filter_by(dinner=dinner).first()
-        return deepcopy(find)
+        return find
 
     def return_all(self):
         return self.session.query(Dinner)
@@ -175,12 +176,12 @@ class DinnerTypeController(IConnector):
         except:
             self.session.rollback()
             return None
-        return deepcopy(type)
+        return type
 
     def delete(self, id):
         if not (self.session.query(Dinnerset).filter_by(id_dinnertype=id).count()):
             delete = self.session.query(Dinnertype).filter_by(id=id).first()
-            return_del_object = deepcopy(delete)
+            return_del_object = delete
             try:
                 self.session.delete(delete)
                 self.session.commit()
@@ -198,7 +199,7 @@ class DinnerTypeController(IConnector):
             except:
                 self.session.rollback()
                 return None
-            return deepcopy(update)
+            return update
 
     def __iter__(self):
         dinners = self.session.query(Dinnertype)
@@ -216,12 +217,12 @@ class DinnerSetController(IConnector):
         except:
             self.session.rollback()
             return None
-        return deepcopy(new)
+        return new
 
     def delete(self, id):
         if not (self.session.query(Userlist).filter_by(id_dinnerset=id).count()):
             delete = self.session.query(Dinnerset).filter_by(id=id).first()
-            return_del_object = deepcopy(delete)
+            return_del_object = delete
             try:
                 self.session.delete(delete)
                 self.session.commit()
@@ -239,7 +240,7 @@ class DinnerSetController(IConnector):
             except:
                 self.session.rollback()
                 return None
-            return deepcopy(update)
+            return update
 
     def __iter__(self):
         Objects = self.session.query(Dinnerset)
@@ -248,7 +249,7 @@ class DinnerSetController(IConnector):
 
     def find(self, id):
         Object = self.session.query(Dinnerset).filter_by(id=id).first()
-        return deepcopy(Object)#tuple((Object.dinner.dinner, Object.dinner.more, Object.dinnertype, Object.dinnertype.price))
+        return Object#tuple((Object.dinner.dinner, Object.dinner.more, Object.dinnertype, Object.dinnertype.price))
 
 
 class DinnerCompositController(IConnector):
@@ -261,11 +262,11 @@ class DinnerCompositController(IConnector):
         except:
             self.session.rollback()
             return None
-        return deepcopy(composti)
+        return composti
 
     def delete(self, id):
             delete = self.session.query(Dinnercomposit).filter_by(id=id).first()
-            return_del_object = deepcopy(delete)
+            return_del_object = delete
             try:
                 self.session.delete(delete)
                 self.session.commit()
@@ -289,11 +290,11 @@ class UserListController(IConnector):
         except:
             self.session.rollback()
             return None
-        return deepcopy(userlist)
+        return userlist
 
     def delete(self, id: int):
         delete = self.session.query(Userlist).filter_by(id=id).first()
-        return_del_object = deepcopy(delete)
+        return_del_object = delete
         try:
             self.session.delete(delete)
             self.session.commit()
@@ -313,7 +314,7 @@ class UserListController(IConnector):
         except:
             self.session.rollback()
             return None
-        return deepcopy(Userl)
+        return Userl
 
     def pay(self, id: int, bought: bool = True):
         Userl = self.session.query(Userlist).filter_by(id=id).first()
@@ -323,7 +324,7 @@ class UserListController(IConnector):
         except:
             self.session.rollback()
             return None
-        return deepcopy(Userl)
+        return Userl
 
     def find(self, id):
         temp = self.session.query(Userlist).filter_by(id=id).first()

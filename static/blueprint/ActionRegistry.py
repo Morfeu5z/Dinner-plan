@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify, session, redirect
-from Data.database.controllers.UserController import UserController, Rollback
+from Data.database.controllers.UserController import UserController
 
 action_registry = Blueprint('action_registry', __name__, template_folder='templates')
 
@@ -14,16 +14,19 @@ def registry_action():
     if catchData[3] == catchData[4]:
         print('Password: OK')
         Dater = UserController()
-        userData = Dater.regestration(email=catchData[2], name=catchData[0], lastname=catchData[1], password=catchData[3])
-        print('Registry: OK')
-        print(userData.id, userData.name, userData.lastname, userData.email, userData.permission)
-        is_in_db = True if userData else False
+        if not Dater.find_by_email(catchData[2]):
+            userData = Dater.regestration(email=catchData[2], name=catchData[0], lastname=catchData[1], password=catchData[3])
+            print(userData.name, userData.email, userData.id_permission)
+            is_in_db = True if userData else False
+            print('Registry: OK')
+        else:
+            message = 'Użytkownik o tym e-mailu jest już zarejestrowany.'
 
     if is_in_db:
         print('Registry: {}'.format(is_in_db))
         # testLogin()
         session['user_id'] = userData.id
-        session['user_premission'] = userData.permission
+        session['user_premission'] = userData.id_permission
         session['user_email'] = userData.email
         session['user_first_name'] = userData.name
         session['user_last_name'] = userData.lastname
