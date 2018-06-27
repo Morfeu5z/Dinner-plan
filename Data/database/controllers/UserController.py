@@ -1,5 +1,6 @@
 from ..models import User, Permission, Dinnerset, Dinnertype, Userlist, Dinner, Dinnercomposit
 from datetime import date, timedelta
+from sqlalchemy import or_
 import calendar
 import hashlib
 from ...database import IConnector
@@ -46,6 +47,18 @@ class UserController(IConnector):
         """
         user = self.session.query(User).filter_by(email=email).filter_by(password=password).first()
         return user
+
+    def find_by_name_or_lastname(self, text:str):
+        text = text.strip()
+        users = list()
+        if len(text.split(" ")) > 1:
+            imie, nazwisko = text.split()
+            users = self.session.query(User).filter(or_(User.name.ilike('%{im}%'.format(im=imie)), User.lastname.ilike('%{nzw}%'.format(nzw=nazwisko)))).all()
+        elif len(text.split(" ")) == 1:
+            users = self.session.query(User).filter(or_(User.name.ilike('%{text}%'.format(text=text)), User.lastname.ilike('%{text}%'.format(text=text)))).all()
+        if len(users) == 0:
+            users = self.session.query(User).all()
+        return users
 
     def change_permissions(self, id: int, id_permission: int):
         user = self.session.query(User).filter_by(id=id)
