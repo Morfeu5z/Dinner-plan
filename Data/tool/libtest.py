@@ -1,5 +1,5 @@
 from Data.tool.vt1000 import ForeGround as text, FormatCode as code
-import importlib
+import importlib.util
 import sys
 import os
 
