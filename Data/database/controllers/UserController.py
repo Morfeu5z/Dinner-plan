@@ -354,6 +354,17 @@ class UserListController(IConnector):
             if start <= x.dinnerdate <= finish:
                 yield x
 
+    def find_mies_rok(self, mies, rok):
+        """
+
+        :return:
+        """
+        start = date(rok, mies, 1)
+        finish = self.___add_months(start, 1)
+        for x in self.session.query(Userlist).all():
+            if start <= x.dinnerdate <= finish:
+                yield x
+
     def __iter__(self):
         Objects = self.session.query(Userlist)
         for Object in Objects:
