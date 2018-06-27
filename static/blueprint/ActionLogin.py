@@ -9,7 +9,7 @@ def tryLogin():
     catchData = request.get_json(force=True)
     catchData = catchData['param']
     # [ email, password ]
-    print('Get param: {}'.format(catchData))
+    # print('Get param: {}'.format(catchData))
     is_in_db = False
     callback = []
 
@@ -43,7 +43,7 @@ def tryLogin():
     else:
         callback.append('Nieprawidlowe dane logowania.')
 
-    print("Callback: {}".format(callback))
+    # print(callback)
     # session.clear()
     return jsonify({'param': callback});
 
